@@ -1,12 +1,12 @@
 var express = require('express');
 var app = express();
 var https = require('https');
-var request = require('request');
+//var request = require('request');
 
-var server = app.listen(8081, function () {
+var server = app.listen(8080, function () {
 
 	var host = server.address().address;
-	var port = server.address().port;
+	var port = process.env.PORT || 8080;
 
 	console.log("http://%s:%s", host, port);
 
