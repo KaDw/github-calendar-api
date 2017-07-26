@@ -10,7 +10,10 @@ var server = app.listen(port, function () {
 })
 
 app.get('/', function (req, res) {
-	res.send('howto: </br>/commits/:user - returns array with number of commits everyday</br>/total/:user - returns total number of commits this year');
+	res.send('howto: </br>\
+		/commits/:user - returns array with number of commits everyday</br>\
+		/total/:user - returns total number of commits this year</br>\
+		/commits/last/:user - returns number of commits for last 31 days,');
 })
 
 app.get('/total/:user', function (req, res) {
@@ -94,3 +97,50 @@ app.get('/commits/:user', function (req, res) {
 
 	}).end();
 })
+
+app.get('/commits/last/:user', function (req, res) {
+	var options = {
+		host: 'github.com',
+		port: 443,
+		path: '/' + req.params.user,
+		method: 'GET',
+		headers: {
+			accept: 'text/html'
+		}
+	};
+	https.request(options, function(cres){
+		console.log('STATUS: ' + res.statusCode);
+		// console.log('HEADERS: ' + JSON.stringify(res.headers));
+		cres.setEncoding('utf8');
+		var body = '';
+
+		cres.on('data', function (chunk) {
+		//console.log('BODY: ' + chunk);
+			body += chunk;
+		});
+
+		cres.on('end', function () {
+			var count = [];
+			// get calendar wihtout svg tag
+		  	body = body.slice(body.indexOf('js-calendar-graph-svg')+23); 
+		  	body = body.slice(0, body.indexOf('</svg>'));
+		  	console.log(body);
+		  	body.split("\n").slice(2).map(c => c.trim()).forEach(c => {
+
+		  		let fill = c.match(/data-count="([0-9]+)"/);
+		  		if(fill){
+		  			count.push(parseInt(fill[1]));
+		  		}
+		  	});
+		  	console.log(count.length);
+		  	count = count.slice(count.length-31, count.length);
+		  	var d = new Date();
+    		var n = d.getDay()
+		  	var obj = { "day" : n,"data" : count}
+		  	res.send(JSON.stringify(obj));
+		});
+		console.log('test');
+
+	}).end();
+})
+
