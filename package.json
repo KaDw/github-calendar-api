@@ -4,7 +4,8 @@
   "description": "This example is so cool.",
   "main": "github_cc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" "node github_cc.js"
   },
   "keywords": [
     "github",
