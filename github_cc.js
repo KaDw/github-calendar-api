@@ -46,7 +46,8 @@ app.get('/total/:user', function (req, res) {
 		  			counter += parseInt(fill[1]);
 		  		}
 		  	});
-		  	res.send(JSON.stringify(counter));
+		  	var obj = { "data" : counter}
+		  	res.send(JSON.stringify(obj));
 		});
 		console.log('test');
 
@@ -76,7 +77,6 @@ app.get('/commits/:user', function (req, res) {
 
 		cres.on('end', function () {
 			var count = [];
-	  		var counter = 0;
 			// get calendar wihtout svg tag
 		  	body = body.slice(body.indexOf('js-calendar-graph-svg')+23); 
 		  	body = body.slice(0, body.indexOf('</svg>'));
@@ -85,11 +85,10 @@ app.get('/commits/:user', function (req, res) {
 		  		let fill = c.match(/data-count="([0-9]+)"/);
 		  		if(fill){
 		  			count.push(parseInt(fill[1]));
-		  			counter++;
 		  		}
 		  	});
-		  	console.log(counter);
-		  	res.send(JSON.stringify(count));
+		  	var obj = { "data" : count}
+		  	res.send(JSON.stringify(obj));
 		});
 		console.log('test');
 
