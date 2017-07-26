@@ -13,7 +13,8 @@
   "author": "karol",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.9.8"
+    "express": "^4.15.3",
+    "https": "^0.5.9"
   },
   "engines": {
     "node": "6.11.1"
