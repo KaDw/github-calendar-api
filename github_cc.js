@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 	res.send('howto: </br>\
 		/commits/:user - returns array with number of commits everyday</br>\
 		/total/:user - returns total number of commits this year</br>\
-		/commits/last/:user - returns number of commits for last 31 days,');
+		/commits/last/:user - returns number of commits for last 31 days');
 })
 
 app.get('/total/:user', function (req, res) {
